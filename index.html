@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f3ec" />
+    <meta name="description" content="Аким на 5 часов — AI-симулятор городских решений: единый бюджет, 14 мероприятий, 5 районов, объяснимый Astana Quality of Life Score." />
+    <title>Аким на 5 часов — BEZBAB</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css?v=13" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="На главную"><span class="brand-mark">А</span><span>BEZBAB <em>/ HackAlem AI</em></span></a>
+      <div class="topbar-right"><span class="topbar-tag" id="engine-status">Модель загружается…</span><button id="model-settings" class="icon-button" type="button" title="Настройки модели" aria-label="Настройки модели">⚙</button></div>
+    </header>
+
+    <div id="model-banner" class="model-banner" role="status" hidden></div>
+    <main id="top">
+      <section class="hero container">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="pulse"></span> AI-СИМУЛЯТОР УПРАВЛЕНИЯ ГОРОДОМ · АСТАНА</p>
+          <h1>Аким на <i>5 часов</i></h1>
+          <p class="lead">Пять решений. 100 единиц бюджета. Пять районов, которые ждут разного.</p>
+          <p class="hero-note">Оптимизатор предложит 5 стратегий — наборов из 5 мероприятий с разными приоритетами. Выберите одну или соберите свою из <span data-measure-count>14</span> мер: модель пересчитает показатели районов, AI-аналитик объяснит сильные стороны и риски.</p>
+          <a class="primary-button" href="#decisions">Выбрать стратегию <span>↗</span></a>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="visual-grid"></div>
+          <div class="visual-orbit orbit-one"></div><div class="visual-orbit orbit-two"></div>
+          <div class="hero-number">05<span>решений</span></div>
+          <div class="hero-city">ASTANA<br /><b>2050?</b></div>
+          <div class="visual-caption">Будущее города<br />зависит от выбора сегодня.</div>
+        </div>
+      </section>
+
+      <section class="context-band">
+        <div class="container context-grid">
+          <div><span class="context-number">100</span><strong>Единиц бюджета</strong><p>Одинаково для всех команд; остаток — резерв</p></div>
+          <div><span class="context-number">5×10</span><strong>Районов × показателей</strong><p>Синтетический датасет, шкала 0–100</p></div>
+          <div><span class="context-number" data-measure-count>14</span><strong>Мероприятий</strong><p>С лагом запуска, синергиями и конфликтами</p></div>
+          <div><span class="context-number" id="space-count">…</span><strong>Допустимых сценариев</strong><p>Оптимизатор проверяет каждый</p></div>
+        </div>
+      </section>
+
+      <section class="container baseline-section" aria-labelledby="baseline-title">
+        <div class="section-heading"><div><p class="eyebrow">ОТПРАВНАЯ ТОЧКА</p><h2 id="baseline-title">Город до ваших решений</h2></div><p>Все показатели синтетические: 0–100, больше — лучше. Красная метка — критическое значение ниже 40 (штраф −1 к Score).</p></div>
+        <div class="formula-card" id="baseline-formula"></div>
+        <div id="baseline-grid" class="district-grid five"></div>
+      </section>
+
+      <section id="decisions" class="decision-section" aria-labelledby="decision-title">
+        <div class="container">
+          <div class="section-heading"><div><p class="eyebrow">ВАШ ХОД</p><h2 id="decision-title">Выберите стратегию</h2></div><p id="strategies-lead">Оптимизатор перебирает все допустимые наборы из 5 мероприятий и подбирает 5 стратегий с разными приоритетами.</p></div>
+          <div id="insurance" class="insurance"></div>
+          <div id="strategies" class="strategies" aria-live="polite"><p class="strategies-wait">Подбираем стратегии…</p></div>
+          <div id="strategy-compare" class="strategy-compare"></div>
+          <div class="own-set"><div><strong>Нужна своя комбинация?</strong><span>Соберите 5 мероприятий вручную из полного списка — с подсказками бюджета, ограничений и прироста Score.</span></div><button id="open-constructor" type="button" class="outline-button">Собрать свой набор ↗</button></div>
+        </div>
+      </section>
+
+      <section id="results" class="container results-section" aria-labelledby="results-title" hidden>
+        <div class="section-heading"><div><p class="eyebrow" id="results-kicker">РЕЗУЛЬТАТ МОДЕЛИ</p><h2 id="results-title">Что изменилось?</h2><div class="result-actions"><button id="edit-set" type="button" class="outline-button">Изменить состав</button><a class="text-link" href="#decisions">← Другие стратегии</a></div></div><p>Расчёт детерминирован и проверен формально: одинаковые решения всегда дают одинаковый Score.</p></div>
+
+        <div class="result-hero">
+          <div class="score-block"><p>ASTANA QUALITY OF LIFE SCORE</p><div><strong id="final-score">—</strong><span>/ 100</span></div><small id="score-change"></small></div>
+          <div class="score-facts">
+            <p id="score-formula" class="score-formula"></p>
+            <div class="fact-row"><span>Место среди всех допустимых</span><strong id="score-rank">считаем…</strong></div>
+            <div class="fact-row"><span>Устойчивость (80% симуляций)</span><strong id="score-robust"></strong></div>
+            <div class="fact-row"><span>Стресс-тест событиями</span><strong id="score-stress"></strong></div>
+          </div>
+        </div>
+
+        <article class="ai-panel">
+          <div class="ai-head"><div><p class="eyebrow">AI-АНАЛИТИК</p><h3>Объяснение сценария</h3></div><span id="ai-badge" class="ai-badge">Правила модели</span></div>
+          <div id="ai-text" class="ai-text"></div>
+          <div class="analysis-grid three">
+            <div class="analysis-card"><span class="analysis-icon good">↗</span><h4>Сильные стороны</h4><ul id="strengths-list"></ul></div>
+            <div class="analysis-card"><span class="analysis-icon caution">!</span><h4>Риски</h4><ul id="risks-list"></ul></div>
+            <div class="analysis-card"><span class="analysis-icon neutral">⌂</span><h4>Последствия для жителей</h4><ul id="consequences-list"></ul></div>
+          </div>
+          <div class="tradeoffs"><h4>Главные компромиссы</h4><ul id="tradeoffs-list"></ul></div>
+        </article>
+
+        <div class="block">
+          <div class="subsection-heading"><h3>Вклад каждого решения в Score</h3><p>Значение Шепли: сумма вкладов в точности равна приросту Score</p></div>
+          <div id="contributions" class="contributions"></div>
+        </div>
+
+        <div class="block chart-grid">
+          <figure class="chart-card"><figcaption><strong>Ваш сценарий среди всех допустимых</strong><span>Распределение Score по <b id="hist-count">…</b> наборам</span></figcaption><div id="histogram" class="chart"></div></figure>
+          <figure class="chart-card"><figcaption><strong>Бюджет → максимально достижимый Score</strong><span id="pareto-caption">Граница оптимальности; точка — ваш сценарий</span></figcaption><div id="pareto" class="chart"></div></figure>
+        </div>
+
+        <div class="block">
+          <div class="subsection-heading"><h3>Показатели районов</h3><p>Светлая часть полосы — прирост после решений; красная метка — ниже 40</p></div>
+          <div id="district-results-grid" class="district-grid five"></div>
+        </div>
+
+        <div class="advisor-panel block">
+          <div class="advisor-head"><div><p class="eyebrow">ОПТИМИЗАТОР</p><h3>Как улучшить сценарий</h3></div><p id="advisor-status" class="advisor-status"></p></div>
+          <div id="single-advice" class="single-advice"></div>
+          <div id="alternatives" class="alternatives"></div>
+          <div id="core" class="core"></div>
+        </div>
+
+        <div class="stress-panel block">
+          <div class="subsection-heading"><h3>Стресс-тест: неожиданные городские события</h3><p>Ликвидация оплачивается из резерва. Не хватает — придётся перераспределить бюджет</p></div>
+          <div id="stress-list" class="stress-list"></div>
+          <div id="realloc-output" class="realloc-output" aria-live="polite"></div>
+        </div>
+
+        <div class="scenario-panel block">
+          <div class="scenario-heading"><div><p class="eyebrow">СРАВНЕНИЕ КОМАНД</p><h3>Таблица сценариев</h3><p>Все стартуют с одинакового бюджета и данных. Сохраните свой результат и добавьте сценарии других команд по коду или ссылке.</p></div></div>
+          <div class="team-form">
+            <label>Команда <input id="team-name" type="text" maxlength="40" placeholder="Например, BEZBAB" /></label>
+            <button id="save-scenario" class="outline-button" type="button">Сохранить результат +</button>
+            <button id="share-scenario" class="outline-button" type="button">Скопировать ссылку ↗</button>
+          </div>
+          <div class="team-form">
+            <label>Код или ссылка другой команды <input id="import-code" type="text" placeholder="M2_M3.nura_M8.nura_M9.nura_M14" /></label>
+            <input id="import-name" type="text" maxlength="40" placeholder="Название команды" aria-label="Название импортируемой команды" />
+            <button id="import-button" class="outline-button" type="button">Добавить</button>
+          </div>
+          <div id="leaderboard" class="leaderboard"></div>
+          <div id="comparison-output" class="comparison-output" role="status"></div>
+        </div>
+
+        <div class="present-panel block">
+          <div><p class="eyebrow">ДЛЯ ЗАЩИТЫ</p><h3>Краткая презентация решения</h3><p>Пять слайдов по вашему сценарию: решения, результат, районы, анализ, рекомендации. Печать в PDF — из окна предпросмотра.</p></div>
+          <button id="present-button" class="primary-button" type="button">Сгенерировать презентацию <span>↗</span></button>
+        </div>
+
+        <p class="model-note">Метод: детерминированная модель по формулам ТЗ, точный перебор всех допустимых наборов в Web Worker, значения Шепли, Монте-Карло, стресс-тест. Математика модели ТЗ проверена в Z3 и Lean 4 + Mathlib. LLM только объясняет готовые числа. <a href="./README.md" target="_blank" rel="noopener">Формулы и проверки — в README.</a></p>
+      </section>
+    </main>
+
+    <dialog id="constructor" class="constructor" aria-labelledby="constructor-title">
+      <div class="constructor-head"><div><p class="eyebrow">КОНСТРУКТОР</p><h3 id="constructor-title">Собрать свой набор из 5 мероприятий</h3><p>Не больше двух мер из одного направления. Районным мерам нужен район, городские действуют везде. Число на кнопке — изменение Score, если добавить меру сейчас.</p></div><button id="close-constructor" type="button" class="icon-button" aria-label="Закрыть">✕</button></div>
+      <div class="workspace-layout">
+            <div id="catalog" class="catalog"></div>
+            <aside class="budget-panel" aria-label="Бюджет и готовность сценария">
+              <p class="eyebrow">РЕСУРСЫ ГОРОДА</p>
+              <div class="budget-amount"><span id="spent">0</span><small>/ 100 ед.</small></div>
+              <div class="budget-track"><div id="budget-fill"></div></div>
+              <p id="remaining" class="remaining">Осталось 100 ед.</p>
+              <div class="budget-divider"></div>
+              <p class="aside-title">Ваши решения <span id="slot-count">0 / 5</span></p>
+              <ol id="slots" class="slots"></ol>
+              <div id="live-score" class="live-score" aria-live="polite" hidden></div>
+              <div id="validation-message" class="validation-message" role="status"></div>
+              <button id="calculate-button" class="primary-button full-width" type="button" disabled>Рассчитать сценарий <span>↗</span></button>
+              <div class="panel-links"><button id="example-button" class="text-button" type="button">Пример из ТЗ</button><button id="reset-button" class="text-button" type="button">Сбросить</button></div>
+            </aside>
+          </div>
+    </dialog>
+
+    <dialog id="model-editor" class="model-editor" aria-labelledby="model-editor-title">
+      <div class="editor-head"><div><p class="eyebrow">НАСТРОЙКИ МОДЕЛИ</p><h3 id="model-editor-title">Мероприятия, веса и правила</h3></div><p>Изменения сохраняются в этом браузере. По ТЗ все команды считают на одной модели — вернуть её можно кнопкой внизу.</p></div>
+      <div id="editor-tabs" class="editor-tabs" role="tablist"></div>
+      <div id="editor-panel" class="editor-panel"></div>
+      <details class="expert">
+        <summary>Для опытных: формула итоговой оценки</summary>
+        <p id="formula-preview" class="formula-preview"></p>
+        <div id="editor-rules" class="rules-grid"></div>
+        <p class="editor-hint">λ = 0 — формула ТЗ. Чем больше λ, тем сильнее отстающие районы тянут итог вниз: каждый район с оценкой ниже T снимает λ × (T − D) баллов. Увеличьте «вес самого слабого района», чтобы сильнее учитывать самый отстающий район.</p>
+      </details>
+      <div id="editor-status" class="editor-status" aria-live="polite"></div>
+      <div class="editor-actions"><button id="editor-reset" type="button" class="text-link">Вернуть модель ТЗ</button><span></span><button id="editor-cancel" type="button" class="outline-button">Отмена</button><button id="editor-apply" type="button" class="primary-button">Применить</button></div>
+    </dialog>
+
+    <dialog id="presentation" class="presentation" aria-label="Презентация решения">
+      <div class="presentation-bar"><strong>Презентация решения</strong><div><button id="print-button" class="outline-button" type="button">Печать / PDF</button><button id="close-presentation" class="outline-button" type="button">Закрыть</button></div></div>
+      <div id="slides" class="slides"></div>
+    </dialog>
+
+    <footer><div class="container footer-inner"><span>BEZBAB · Аким на 5 часов</span><span>Синтетические данные · HackAlem AI</span></div></footer>
+    <script type="module" src="./main.mjs?v=8"></script>
+  </body>
+</html>

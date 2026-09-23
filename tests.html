@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Тесты — Аким на 5 часов</title>
+    <style>
+      :root{font-family:Manrope,Arial,sans-serif;color:#202621;background:#f6f3ec}body{margin:0;padding:32px 20px}main{max-width:900px;margin:auto}h1{font-size:30px;letter-spacing:-.04em;margin:0 0 6px}p{color:#5e6a5f;font-size:14px}
+      #summary{font-size:18px;font-weight:800;margin:18px 0}#summary.ok{color:#2f6b3c}#summary.fail{color:#9f2a1d}
+      ol{list-style:none;padding:0;display:grid;gap:6px}li{display:grid;grid-template-columns:28px 1fr auto;gap:10px;background:#fff;border:1px solid #e0e3d9;border-radius:8px;padding:10px 14px;font-size:14px}li.fail{border-color:#e3b39f;background:#fff6f3}li small{grid-column:2/-1;color:#9f2a1d;font-size:12px}li span:last-child{color:#7d857c;font-size:12px}
+    </style>
+    <!-- Тот же файл engine.test.mjs, что и для `node --test`: node:* модули подменяются браузерными заглушками. -->
+    <script type="importmap">{ "imports": { "node:test": "./tests/browser-runner.mjs", "node:assert/strict": "./tests/browser-assert.mjs", "node:fs": "./tests/browser-fs.mjs" } }</script>
+  </head>
+  <body>
+    <main>
+      <h1>Тесты модели</h1>
+      <p>Запускает <code>engine.test.mjs</code> в браузере — без Node.js. Утверждения сверяются с <code>verification/expected.json</code>, который независимо проверен Z3 и Lean.</p>
+      <div id="summary">Выполняется…</div>
+      <ol id="results"></ol>
+    </main>
+    <script type="module">
+      import "./engine.test.mjs";
+      import { run } from "./tests/browser-runner.mjs";
+      const list = document.querySelector("#results");
+      const esc = (text) => String(text).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);
+      const results = await run((result) => {
+        list.insertAdjacentHTML("beforeend", `<li class="${result.ok ? "ok" : "fail"}"><span>${result.ok ? "✓" : "✗"}</span><span>${esc(result.name)}</span><span>${result.ms.toFixed(0)} мс</span>${result.ok ? "" : `<small>${esc(result.error)}</small>`}</li>`);
+      });
+      const passed = results.filter((result) => result.ok).length;
+      const summary = document.querySelector("#summary");
+      summary.textContent = `${passed} из ${results.length} тестов пройдено`;
+      summary.className = passed === results.length ? "ok" : "fail";
+      window.testResults = results;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "_comment": "Утверждения JS-реализации. Проверяются тестами (engine.test.mjs), Z3 (z3_verify.py) и Lean (lean/AkimScore.lean). Score — точные десятичные значения.",
+  "baseline": "52.55768",
+  "example": { "code": "M5.saryarka_M7.nura_M8.nura_M10.nura_M12", "cost": 95, "score": "56.54307" },
+  "cheapest": { "code": "M4.nura_M9.nura_M10.nura_M11.nura_M12", "cost": 61 },
+  "validCount": 694395,
+  "optimum": { "code": "M2_M3.nura_M8.nura_M9.nura_M14", "cost": 98, "score": "57.236735" },
+  "pareto": [
+    { "maxCost": 61, "score": "55.667385", "code": "M4.nura_M9.nura_M10.nura_M11.nura_M12" },
+    { "maxCost": 62, "score": "55.788575", "code": "M9.nura_M10.nura_M11.nura_M12_M14" },
+    { "maxCost": 66, "score": "56.572625", "code": "M8.nura_M9.nura_M10.nura_M11.nura_M12" },
+    { "maxCost": 68, "score": "56.673465", "code": "M8.nura_M9.nura_M10.nura_M11.nura_M14" },
+    { "maxCost": 71, "score": "56.746695", "code": "M4.nura_M8.nura_M9.nura_M10.nura_M12" },
+    { "maxCost": 72, "score": "56.867885", "code": "M8.nura_M9.nura_M10.nura_M12_M14" },
+    { "maxCost": 83, "score": "56.895805", "code": "M2_M4.nura_M8.nura_M9.nura_M14" },
+    { "maxCost": 86, "score": "57.087625", "code": "M3.nura_M8.nura_M9.nura_M10.nura_M12" },
+    { "maxCost": 88, "score": "57.188465", "code": "M3.nura_M8.nura_M9.nura_M10.nura_M14" },
+    { "maxCost": 91, "score": "57.225545", "code": "M3.nura_M4.nura_M8.nura_M9.nura_M14" },
+    { "maxCost": 98, "score": "57.236735", "code": "M2_M3.nura_M8.nura_M9.nura_M14" }
+  ]
+}

@@ -1,0 +1,4 @@
+__pycache__/
+*.py[cod]
+verification/lean/.lake/
+verification/lean/lake-manifest.json
